@@ -32,7 +32,12 @@ def main():
         'Э': 'Э͒͠͠', 'Ю': 'Ю̋͠', 'Я': 'Я̋',
         ' ': ' '
     }
-    skills = ["Стремительный прыжок",
+        
+    if os.path.exists("charsheets") == False:
+        os.makedirs("charsheets")
+        
+    for i in range(10):
+        skills = ["Стремительный прыжок",
             "Электрический выстрел",
             "Ледяной удар",
             "Стремительный удар",
@@ -40,20 +45,16 @@ def main():
             "Тайный побег",
             "Ледяной выстрел",
             "Огненный заряд"]
-    skills = random.sample(skills,3)
-
-    runic_skills = []
-    for skill in skills:
-        for value in letters_mapping:
-            for letter in skill:
-                if letter == value:
-                    skill = skill.replace(letter,letters_mapping[value])
-        runic_skills.append(skill)
+        skills = random.sample(skills,3)
         
-    if os.path.exists("charsheets") == False:
-        os.makedirs("charsheets")
-        
-    for i in range(10):
+        runic_skills = []
+        for skill in skills:
+            for value in letters_mapping:
+                for letter in skill:
+                    if letter == value:
+                        skill = skill.replace(letter,letters_mapping[value])
+            runic_skills.append(skill)
+            
         context = {
         "first_name": fake.first_name(),
         "last_name": fake.last_name(),
@@ -70,6 +71,7 @@ def main():
     }
         
         file_operations.render_template("charsheet.svg","charsheets/charsheet-{}.svg".format(i+1),context)
+        
 if __name__ == '__main__':
     main()
 
